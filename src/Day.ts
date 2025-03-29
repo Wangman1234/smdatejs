@@ -13,4 +13,8 @@ export class Day{
             this.day = weekday
         }
     }
+
+    public toString(): string {
+        return this.day + "日";
+    }
 }

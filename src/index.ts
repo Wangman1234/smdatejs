@@ -1,1 +1,1 @@
-export {day1} from "./Functions";
+export {day1, toChineseNumerals} from "./Functions";
