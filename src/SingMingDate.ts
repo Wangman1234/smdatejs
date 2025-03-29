@@ -6,10 +6,11 @@ import {DateError} from "./DateError";
 import {dayNow, toSingMingDate} from "./Functions";
 
 export class SingMingDate {
-    public day: Day
-    public week: Week
-    public month: Month
-    public year: Year
+    public day: Day;
+    public week: Week;
+    public month: Month;
+    public year: Year;
+    public dateNumber: number;
 
     public constructor(year: Year | number, month: Month | number, week: Week | number, day: Day | number) {
         if (typeof year === "number") {
@@ -33,6 +34,18 @@ export class SingMingDate {
             this.day = day
         }
         this.check()
+        let a = 36 * (this.month.month - 1)
+        if (this.year.leapYear) {
+            switch (this.month.part) {
+                case 3:
+                    a = 36 * 6 + 30 * 4
+                    break
+                case 2:
+                    a = 36 * 6 + 30 * (this.month.month - 6 - 1)
+                    break
+            }
+        }
+        this.dateNumber = this.day.day + (this.week.week - 1) * 6 + a
     }
 
     public static day1() {
@@ -103,6 +116,10 @@ export class SingMingDate {
         }
     }
 
+    public toInt() {
+        return this.dateNumber + this.year.daysUntil
+    }
+
     public static now() {
         return toSingMingDate(dayNow)
     }
@@ -113,3 +130,4 @@ export class SingMingDate {
 }
 
 console.log("" + SingMingDate.now())
+console.log("" + SingMingDate.now().toInt())
